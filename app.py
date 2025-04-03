@@ -23,13 +23,16 @@ index.add(doc_embeddings)
 
 # Dashboard Page
 def dashboard():
+    def dashboard():
+    st.image("logo.jpeg", width=300)
+
     st.markdown("""
     <div style='text-align: center;'>
-        <img src='logo.jpeg' width='300'/>
         <h1 style='color: #2E8B57;'>Welcome to IFSSA Client Retention Predictor</h1>
         <p style='font-size:18px;'>Empowering community service with data-driven decisions</p>
     </div>
     """, unsafe_allow_html=True)
+
 
     st.subheader("💡 Abstract")
     st.write("""
