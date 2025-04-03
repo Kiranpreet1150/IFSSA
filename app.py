@@ -23,7 +23,7 @@ index.add(doc_embeddings)
 
 # Dashboard Page
 def dashboard():
-    st.image("logo.jpeg", width=300)
+    st.image("logo.jpeg")
 
     st.markdown("""
     <div style='text-align: center;'>
