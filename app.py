@@ -8,7 +8,6 @@ import plotly.graph_objects as go
 import xgboost as xgb
 import re
 from sentence_transformers import SentenceTransformer
-import faiss
 import numpy as np
 
 # Load the dataset
