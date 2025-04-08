@@ -9,16 +9,6 @@ import xgboost as xgb
 import re
 import numpy as np
 
-# Load the dataset
-data = pd.read_csv('Processed_data_latest.csv', encoding='latin1')
-docs = pd.read_csv('processed_chunks.csv')
-
-# Embed documents
-embedder = SentenceTransformer('all-MiniLM-L6-v2')
-doc_embeddings = embedder.encode(docs['chunk'].tolist(), convert_to_numpy=True)
-index = faiss.IndexFlatL2(doc_embeddings.shape[1])
-index.add(doc_embeddings)
-
 # Dashboard Page
 def dashboard():
     st.image("logo.jpeg", use_container_width=True)
