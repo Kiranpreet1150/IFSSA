@@ -108,75 +108,6 @@ def predict_page(month_label, model_file):
         except Exception as e:
             st.error(f"Prediction failed: {e}")
 
-# Chatbot Page
-def chatbot_page():
-    st.title("🤖 IFSSA Chatbot & Predictor")
-    mode = st.radio("What would you like to do?", ["Ask a general question", "Make a prediction"], index=0)
-
-    if mode == "Ask a general question":
-        user_input = st.text_input("Ask something about IFSSA, food hampers, how to register, etc.")
-        if st.button("Ask") and user_input:
-            try:
-                query_embedding = embedder.encode([user_input])
-                D, I = index.search(np.array(query_embedding), k=3)
-                results = docs.iloc[I[0]]['chunk'].tolist()
-                for r in results:
-                    st.write("-", r)
-            except Exception as e:
-                st.error(f"Failed to get response: {e}")
-
-    elif mode == "Make a prediction":
-        user_input = st.text_area("Ask here (e.g. A 42-year-old with 2 dependents picks up Friday, lives 12 km away):")
-
-        if st.button("🔍 Predict") and user_input:
-            try:
-                features = {
-                    'distance_km': 10,
-                    'pickup_day': 4,
-                    'dependents_qty': 2,
-                    'age_group_encoded': 2,
-                    'scheduled_month': 6,
-                    'scheduled_weekday_encoded': 4
-                }
-
-                dist = re.search(r'(\d+)\s*km', user_input)
-                dep = re.search(r'(\d+)\s*dependents?', user_input)
-                age = re.search(r'(\d+)[\s-]*year[\s-]*old', user_input)
-
-                for d, v in {'Monday': 0, 'Tuesday': 1, 'Wednesday': 2, 'Thursday': 3, 'Friday': 4, 'Saturday': 5, 'Sunday': 6}.items():
-                    if d.lower() in user_input.lower():
-                        features['pickup_day'] = v
-                        features['scheduled_weekday_encoded'] = v
-                        break
-
-                if dist:
-                    features['distance_km'] = int(dist.group(1))
-                if dep:
-                    features['dependents_qty'] = int(dep.group(1))
-                if age:
-                    a = int(age.group(1))
-                    features['age_group_encoded'] = 0 if a <= 18 else 1 if a <= 30 else 2 if a <= 45 else 3 if a <= 65 else 4
-
-                input_df = pd.DataFrame([features])
-
-                model_1 = joblib.load("1m_XGBoost_smote.pkl")
-                model_3 = joblib.load("3m_XGBoost_smote.pkl")
-                model_6 = joblib.load("6m_XGBoost_smote.pkl")
-
-                pred_1 = model_1.predict(input_df)[0]
-                pred_3 = model_3.predict(input_df)[0]
-                pred_6 = model_6.predict(input_df)[0]
-
-                def yesno(p): return "✅ Likely to return" if p == 1 else "❌ Unlikely to return"
-
-                st.markdown("### 📊 Prediction Results")
-                st.markdown(f"- 1 Month: {yesno(pred_1)}")
-                st.markdown(f"- 3 Months: {yesno(pred_3)}")
-                st.markdown(f"- 6 Months: {yesno(pred_6)}")
-
-            except Exception as e:
-                st.error(f"Prediction failed: {e}")
-
 # Thank You Page
 def thank_you_page():
     st.title("🙏 Thank You")
@@ -196,7 +127,6 @@ def main():
         "Predicting Return in 1 Month",
         "Predicting Return in 3 Month",
         "Predicting Return in 6 Month",
-        "Chat with Prediction Bot",
         "Thank You"
     ])
 
@@ -210,8 +140,6 @@ def main():
         predict_page("3", "3m_XGBoost_smote.pkl")
     elif app_page == "Predicting Return in 6 Month":
         predict_page("6", "6m_XGBoost_smote.pkl")
-    elif app_page == "Chat with Prediction Bot":
-        chatbot_page()
     elif app_page == "Thank You":
         thank_you_page()
 
