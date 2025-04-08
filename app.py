@@ -32,8 +32,7 @@ def dashboard():
 def exploratory_data_analysis():
     st.title("📊 IFSSA Client Data Analysis")
     st.markdown("""
-    <iframe width="600" height="450" src="https://lookerstudio.google.com/reporting/f21f2db2-6992-4e62-89e1-1d7ac1b699ac" frameborder="0" style="border:0" allowfullscreen sandbox="allow-storage-access-by-user-activation allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox"></iframe>
-    """, unsafe_allow_html=True)
+    <iframe width="600" height="450" src="https://lookerstudio.google.com/embed/reporting/f21f2db2-6992-4e62-89e1-1d7ac1b699ac/page/0NzEF" frameborder="0" style="border:0" allowfullscreen sandbox="allow-storage-access-by-user-activation allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox"></iframe>""", unsafe_allow_html=True)
 
 # Prediction Page Template
 def predict_page(month_label, model_file):
