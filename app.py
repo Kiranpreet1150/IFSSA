@@ -25,7 +25,7 @@ index.add(doc_embeddings)
 # Dashboard Page
 def dashboard():
     try:
-        st.image('logo.jpeg', use_container_width=True)
+        st.image('logo.png', use_container_width=True)
     except FileNotFoundError:
         st.warning("⚠️ Logo image not found. Please upload 'logo.jpeg' to your project directory.")
     st.markdown("""
