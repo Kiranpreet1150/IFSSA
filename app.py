@@ -25,7 +25,7 @@ index.add(doc_embeddings)
 def dashboard():
     st.markdown("""
         <div style='text-align: center; width: 100%;'>
-            <img src='/mnt/data/logo.jpeg' style='width: 100%; max-width: 300px;' />
+            <img src='logo.jpeg' style='width: 100%; max-width: 300px;' />
             <h1 style='color: #2E8B57;'>Welcome to IFSSA Client Retention Predictor</h1>
             <p style='font-size:18px;'>Empowering community service with data-driven decisions</p>
         </div>
