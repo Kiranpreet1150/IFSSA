@@ -15,6 +15,9 @@ import numpy as np
 data = pd.read_csv('Processed_data_latest.csv', encoding='latin1')
 docs = pd.read_csv('processed_chunks.csv')
 
+clients_return_1m = data['recent_returned_1m'].sum()  
+clients_return_3m = data['recent_returned_3m'].sum()  
+clients_return_6m = data['recent_returned_6m'].sum()
 # Embed documents
 embedder = SentenceTransformer('all-MiniLM-L6-v2')
 doc_embeddings = embedder.encode(docs['chunk'].tolist(), convert_to_numpy=True)
@@ -34,6 +37,21 @@ def dashboard():
         <p style='font-size:18px;'>Empowering community service with data-driven decisions</p>
     </div>
     """, unsafe_allow_html=True)
+        # Display the counts of clients who will return in 1, 3, and 6 months in horizontal layout
+    st.subheader("📊 Clients who returned after 28 Sepetember 2023 in given timeframe")
+    
+    # Create columns to display horizontally
+    col1, col2, col3 = st.columns(3)
+    
+    with col1:
+        st.metric("Clients Returning in 1 Month", clients_return_1m)
+    
+    with col2:
+        st.metric("Clients Returning in 3 Months", clients_return_3m)
+    
+    with col3:
+        st.metric("Clients Returning in 6 Months", clients_return_6m)
+
 
     st.subheader("💡 Abstract")
     st.write("""
