@@ -21,11 +21,15 @@ doc_embeddings = embedder.encode(docs['chunk'].tolist(), convert_to_numpy=True)
 index = faiss.IndexFlatL2(doc_embeddings.shape[1])
 index.add(doc_embeddings)
 
+
 # Dashboard Page
 def dashboard():
+    try:
+        st.image('logo.jpeg', use_container_width=True)
+    except FileNotFoundError:
+        st.warning("⚠️ Logo image not found. Please upload 'logo.jpeg' to your project directory.")
     st.markdown("""
     <div style='text-align: center; width: 100%;'>
-        <img src='logo.jpeg' style='width: 100%; max-width: 300px;' />
         <h1 style='color: #2E8B57;'>Welcome to IFSSA Client Retention Predictor</h1>
         <p style='font-size:18px;'>Empowering community service with data-driven decisions</p>
     </div>
